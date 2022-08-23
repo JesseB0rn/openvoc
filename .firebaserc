@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "openvoc": {
+      "hosting": {
+        "openvoc-ngxs": [
+          "openvoc"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "openvoc"
+  }
+}

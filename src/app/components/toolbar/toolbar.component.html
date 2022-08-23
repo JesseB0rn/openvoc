@@ -1,0 +1,35 @@
+<mat-toolbar color="primary">
+  <a
+    mat-icon-button
+    *ngIf="mode === HeaderMode.back || mode === HeaderMode.close"
+    [routerLink]="dismissRouteLink"
+  >
+    <mat-icon *ngIf="mode === HeaderMode.back">arrow_back_ios</mat-icon>
+    <mat-icon *ngIf="mode === HeaderMode.close">close</mat-icon>
+  </a>
+
+  <a
+    mat-icon-button
+    routerLink="/create"
+    *ngIf="mode === HeaderMode.home || mode == HeaderMode.calendar"
+  >
+    <mat-icon>add_box</mat-icon>
+  </a>
+  <span class="spacer"></span>
+
+  <span><ng-content></ng-content></span>
+
+  <span class="spacer"></span>
+
+  <a
+    mat-icon-button
+    routerLink="/settings"
+    *ngIf="mode === HeaderMode.home || mode == HeaderMode.calendar"
+    [matBadge]="notifications"
+    [matBadgeHidden]="notifications == 0"
+    matBadgePosition="after"
+    matBadgeColor="warn"
+  >
+    <mat-icon>settings</mat-icon>
+  </a>
+</mat-toolbar>
