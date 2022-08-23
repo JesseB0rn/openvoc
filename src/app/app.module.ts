@@ -19,9 +19,11 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { FooterModule } from './components/footer/footer.module';
 import { HomeModule } from './pages/home/home.module';
+import { CreateModule } from './pages/create/create.module';
+import { SettingsModule } from './pages/settings/settings.module';
 
 const importedComponents: any[] = [ToolbarModule, FooterModule];
-const pages: any[] = [HomeModule];
+const pages: any[] = [HomeModule, CreateModule, SettingsModule];
 @NgModule({
   declarations: [AppComponent],
   imports: [
