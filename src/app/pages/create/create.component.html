@@ -1,1 +1,41 @@
-<app-toolbar [mode]="1">Set erstellen</app-toolbar>
+<app-toolbar [mode]="1">Create Deck</app-toolbar>
+
+<div class="main-wrapper">
+  <form [formGroup]="createGroup">
+    <mat-form-field appearance="outline" class="block">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        placeholder="Gib einen Namen für das Lernset ein"
+        formControlName="name"
+      />
+      <mat-hint>z.B. Voc unité 1+2</mat-hint>
+    </mat-form-field>
+
+    <p>
+      You can produce the deck either in the spreadsheet-editor of your choice,
+      export a quizlet with default settings or directly type in the field
+      below. The definition goes on the left, the answer on the right with a
+      [TAB] in between.
+    </p>
+
+    <mat-form-field appearance="outline" class="block">
+      <mat-label>Deck as *.csv (tab separated)</mat-label>
+      <textarea
+        matInput
+        placeholder=".CSV here"
+        formControlName="csv"
+      ></textarea>
+    </mat-form-field>
+
+    <button
+      class="block"
+      mat-flat-button
+      color="primary"
+      [disabled]="createGroup.invalid"
+      (click)="createDeck()"
+    >
+      Create Deck
+    </button>
+  </form>
+</div>
