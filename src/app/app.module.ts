@@ -23,7 +23,10 @@ import { CreateModule } from './pages/create/create.module';
 import { SettingsModule } from './pages/settings/settings.module';
 import { DeckStore } from './states/deck.state';
 import { AuthState } from './states/auth.state';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
 import { LandingModule } from './pages/landing/landing.module';
 import { LearnModule } from './pages/learn/learn.module';
 import { LoginModule } from './pages/login/login.module';
@@ -66,7 +69,9 @@ const pages: any[] = [
     ...importedComponents,
     ...pages,
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 750 } },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

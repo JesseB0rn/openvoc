@@ -37,12 +37,11 @@ export class DeckStore {
     {}: StateContext<DeckStoreModel>,
     { deck, author }: createDeck
   ) {
-    deck.author = author;
-    let ref = await addDoc(
+    // deck.author = author;
+    await addDoc(
       collection(this.db, 'decks').withConverter(Deck.converter),
       deck
     );
-    return ref;
   }
 
   @Action(updateDeck)

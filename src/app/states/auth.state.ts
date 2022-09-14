@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
 } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Navigate } from '@ngxs/router-plugin';
 
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import {
@@ -47,7 +48,7 @@ export class AuthState {
   ) {
     signInWithEmailAndPassword(this.auth, credentials.email, credentials.pwd)
       .then((user) => {
-        // dispatch(new SignedInSucc(user.user));
+        dispatch(new SignedInSucc(user.user));
       })
       .catch((err) => {
         this.sbs.open(err);
@@ -61,7 +62,7 @@ export class AuthState {
   ) {
     createUserWithEmailAndPassword(this.auth, email, pwd)
       .then((user) => {
-        // dispatch(new SignedInSucc(user.user));
+        dispatch(new SignedInSucc(user.user));
       })
       .catch((err) => {
         this.sbs.open(err);
@@ -72,7 +73,7 @@ export class AuthState {
   signInAnon({ dispatch }: StateContext<AuthStateModel>) {
     signInAnonymously(this.auth)
       .then((user) => {
-        // dispatch(new SignedInSucc(user.user));
+        dispatch(new SignedInSucc(user.user));
       })
       .catch((err) => {
         this.sbs.open(err);
@@ -89,10 +90,14 @@ export class AuthState {
     });
   }
   @Action(SignedInSucc)
-  signedIn({ patchState }: StateContext<AuthStateModel>, user: SignedInSucc) {
+  signedIn(
+    { patchState, dispatch }: StateContext<AuthStateModel>,
+    user: SignedInSucc
+  ) {
     patchState({
       auth: true,
       user: user.user,
     });
+    dispatch(new Navigate(['']));
   }
 }

@@ -1,1 +1,28 @@
-<button (click)="anon()">Log in anonymously</button>
+<app-toolbar [mode]="1">Create Deck</app-toolbar>
+
+<div class="main-wrapper">
+  <form [formGroup]="loginGroup">
+    <mat-form-field appearance="outline" class="block">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="block">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="pwd" type="password" />
+    </mat-form-field>
+
+    <button
+      class="block"
+      mat-flat-button
+      color="primary"
+      [disabled]="loginGroup.invalid"
+      (click)="login()"
+    >
+      Sign In
+    </button>
+
+    <button (click)="anon()" mat-flat-button color="primary">
+      Log in anonymously
+    </button>
+  </form>
+</div>
