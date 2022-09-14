@@ -11,7 +11,8 @@ export const environment = {
     authDomain: 'openvoc.firebaseapp.com',
     messagingSenderId: '630492902651',
   },
-  production: false
+  production: false,
+  useEmu: false,
 };
 
 /*

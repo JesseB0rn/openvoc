@@ -24,9 +24,19 @@ import { SettingsModule } from './pages/settings/settings.module';
 import { DeckStore } from './states/deck.state';
 import { AuthState } from './states/auth.state';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LandingModule } from './pages/landing/landing.module';
+import { LearnModule } from './pages/learn/learn.module';
+import { LoginModule } from './pages/login/login.module';
 
 const importedComponents: any[] = [ToolbarModule, FooterModule];
-const pages: any[] = [HomeModule, CreateModule, SettingsModule];
+const pages: any[] = [
+  HomeModule,
+  CreateModule,
+  SettingsModule,
+  LandingModule,
+  LearnModule,
+  LoginModule,
+];
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -36,13 +46,13 @@ const pages: any[] = [HomeModule, CreateModule, SettingsModule];
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => {
       const auth = getAuth();
-      if (!environment.production)
+      if (environment.useEmu)
         connectAuthEmulator(auth, 'http://localhost:9099');
       return auth;
     }),
     provideFirestore(() => {
       const firestore = getFirestore();
-      if (!environment.production)
+      if (environment.useEmu)
         connectFirestoreEmulator(firestore, 'localhost', 8080);
       return firestore;
     }),
