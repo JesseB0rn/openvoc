@@ -16,6 +16,7 @@ import {
   SignInWAccount,
   SignOut,
 } from '../actions/auth.actions';
+import { syncDecks } from '../actions/deckActions';
 import { AuthStateModel } from '../models/auth.model';
 
 @State<AuthStateModel>({
@@ -80,13 +81,14 @@ export class AuthState {
       });
   }
   @Action(SignOut)
-  signout({ setState }: StateContext<AuthStateModel>) {
+  signout({ setState, dispatch }: StateContext<AuthStateModel>) {
     this.auth.signOut().then(() => {
       setState({
         auth: false,
         user: '',
       });
       this.sbs.open('Abgemeldet');
+      dispatch(new Navigate(['/login']));
     });
   }
   @Action(SignedInSucc)
@@ -99,5 +101,6 @@ export class AuthState {
       user: user.user.uid,
     });
     dispatch(new Navigate(['']));
+    dispatch(new syncDecks(user.user.uid));
   }
 }

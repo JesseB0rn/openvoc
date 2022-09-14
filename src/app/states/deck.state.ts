@@ -15,6 +15,7 @@ import {
   createDeck,
   deleteDeck,
   gotRealtimeUpdate,
+  saveLocalDeck,
   syncDecks,
   updateDeck,
 } from '../actions/deckActions';
@@ -22,10 +23,10 @@ import { Deck } from '../classes/deck';
 import { DeckStoreModel } from '../models/deck.model.ts';
 
 @State<DeckStoreModel>({
-  name: 'Decks',
+  name: 'decks',
   defaults: {
     decks: [],
-    localDecks: [],
+    localDeck: undefined,
   },
 })
 @Injectable()
@@ -34,7 +35,7 @@ export class DeckStore {
 
   @Action(createDeck)
   async createDeck(
-    {}: StateContext<DeckStoreModel>,
+    { patchState }: StateContext<DeckStoreModel>,
     { deck, author }: createDeck
   ) {
     deck.author = author;
@@ -42,6 +43,9 @@ export class DeckStore {
       collection(this.db, 'decks').withConverter(Deck.converter),
       deck
     );
+    patchState({
+      localDeck: undefined,
+    });
   }
 
   @Action(updateDeck)
@@ -62,6 +66,7 @@ export class DeckStore {
       snapshot.forEach((doc) => {
         decks.push(doc.data());
       });
+
       dispatch(new gotRealtimeUpdate(decks));
     });
   }
@@ -80,5 +85,15 @@ export class DeckStore {
   async deleteDeck({}: StateContext<DeckStoreModel>, { uid }: deleteDeck) {
     let ref = doc(this.db, `decks/${uid}`).withConverter(Deck.converter);
     deleteDoc(ref);
+  }
+
+  @Action(saveLocalDeck)
+  function(
+    { patchState }: StateContext<DeckStoreModel>,
+    { deckIP }: saveLocalDeck
+  ) {
+    patchState({
+      localDeck: deckIP,
+    });
   }
 }

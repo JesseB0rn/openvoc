@@ -1,4 +1,5 @@
 import { Deck } from '../classes/deck';
+import { DeckInProgress } from '../models/deckInProgress.model';
 
 export class createDeck {
   static readonly type = '[Deck] create';
@@ -19,4 +20,9 @@ export class deleteDeck {
 export class gotRealtimeUpdate {
   static readonly type = '[Deck] realtime update';
   constructor(public decks: Deck[]) {}
+}
+
+export class saveLocalDeck {
+  static readonly type = '[Deck] save progress';
+  constructor(public deckIP: DeckInProgress) {}
 }
