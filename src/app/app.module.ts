@@ -21,6 +21,9 @@ import { FooterModule } from './components/footer/footer.module';
 import { HomeModule } from './pages/home/home.module';
 import { CreateModule } from './pages/create/create.module';
 import { SettingsModule } from './pages/settings/settings.module';
+import { DeckStore } from './states/deck.state';
+import { AuthState } from './states/auth.state';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const importedComponents: any[] = [ToolbarModule, FooterModule];
 const pages: any[] = [HomeModule, CreateModule, SettingsModule];
@@ -43,12 +46,13 @@ const pages: any[] = [HomeModule, CreateModule, SettingsModule];
         connectFirestoreEmulator(firestore, 'localhost', 8080);
       return firestore;
     }),
-    NgxsModule.forRoot([], {
+    NgxsModule.forRoot([DeckStore, AuthState], {
       developmentMode: !environment.production,
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
     NgxsRouterPluginModule.forRoot(),
+    MatSnackBarModule,
     ...importedComponents,
     ...pages,
   ],
