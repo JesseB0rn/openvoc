@@ -37,7 +37,7 @@ export class DeckStore {
     {}: StateContext<DeckStoreModel>,
     { deck, author }: createDeck
   ) {
-    // deck.author = author;
+    deck.author = author;
     await addDoc(
       collection(this.db, 'decks').withConverter(Deck.converter),
       deck

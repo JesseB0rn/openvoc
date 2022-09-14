@@ -22,7 +22,7 @@ import { AuthStateModel } from '../models/auth.model';
   name: 'auth',
   defaults: {
     auth: false,
-    user: undefined,
+    user: '',
   },
 })
 @Injectable()
@@ -48,7 +48,7 @@ export class AuthState {
   ) {
     signInWithEmailAndPassword(this.auth, credentials.email, credentials.pwd)
       .then((user) => {
-        dispatch(new SignedInSucc(user.user));
+        // dispatch(new SignedInSucc(user.user));
       })
       .catch((err) => {
         this.sbs.open(err);
@@ -62,7 +62,7 @@ export class AuthState {
   ) {
     createUserWithEmailAndPassword(this.auth, email, pwd)
       .then((user) => {
-        dispatch(new SignedInSucc(user.user));
+        // dispatch(new SignedInSucc(user.user));
       })
       .catch((err) => {
         this.sbs.open(err);
@@ -73,7 +73,7 @@ export class AuthState {
   signInAnon({ dispatch }: StateContext<AuthStateModel>) {
     signInAnonymously(this.auth)
       .then((user) => {
-        dispatch(new SignedInSucc(user.user));
+        // dispatch(new SignedInSucc(user.user));
       })
       .catch((err) => {
         this.sbs.open(err);
@@ -84,7 +84,7 @@ export class AuthState {
     this.auth.signOut().then(() => {
       setState({
         auth: false,
-        user: undefined,
+        user: '',
       });
       this.sbs.open('Abgemeldet');
     });
@@ -96,7 +96,7 @@ export class AuthState {
   ) {
     patchState({
       auth: true,
-      user: user.user,
+      user: user.user.uid,
     });
     dispatch(new Navigate(['']));
   }

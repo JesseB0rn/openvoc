@@ -15,27 +15,23 @@ import { validCSVValidator } from 'src/app/validators/validCSV';
 })
 export class CreateComponent implements OnInit {
   createGroup: FormGroup = this.fb.group({
-    name: ['', [Validators.required]],
+    deck: ['', [Validators.required]],
     csv: ['', [Validators.required, validCSVValidator]],
   });
 
   constructor(private store: Store, private fb: FormBuilder) {}
 
-  user$: BehaviorSubject<User | undefined> = new BehaviorSubject<
-    User | undefined
-  >(undefined);
+  user$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   ngOnInit(): void {
     this.store.select((state) => state.auth.user).subscribe(this.user$);
   }
 
   createDeck() {
-    console.log('alive');
     let deck = new Deck(
-      this.createGroup.value['name'],
+      this.createGroup.value['deck'],
       CSVToArray(this.createGroup.value['csv'], '\t')
     );
-    console.log('alive');
-    this.store.dispatch(new addDeck(deck, this.user$.value?.uid || ''));
+    this.store.dispatch(new addDeck(deck, `${this.user$.getValue()}`));
   }
 }
