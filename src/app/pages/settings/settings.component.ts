@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
+import { BehaviorSubject, map } from 'rxjs';
 import { SignOut } from 'src/app/actions/auth.actions';
 
 @Component({
@@ -8,7 +9,17 @@ import { SignOut } from 'src/app/actions/auth.actions';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
-  constructor(private store: Store) {}
+  signedInEmail$: BehaviorSubject<boolean | undefined> = new BehaviorSubject<
+    boolean | undefined
+  >(undefined);
+  signedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  constructor(private store: Store) {
+    this.store
+      .select((state) => state.auth.signedUpAnon)
+      .subscribe(this.signedInEmail$);
+    this.store.select((state) => state.auth.auth).subscribe(this.signedIn$);
+  }
 
   ngOnInit(): void {}
 

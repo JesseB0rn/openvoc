@@ -4,6 +4,8 @@ import {
   signInAnonymously,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
+  linkWithCredential,
 } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Navigate } from '@ngxs/router-plugin';
@@ -58,16 +60,35 @@ export class AuthState {
 
   @Action(RegisterAccount)
   register(
-    { dispatch }: StateContext<AuthStateModel>,
+    { getState, dispatch, patchState }: StateContext<AuthStateModel>,
     { email, pwd }: RegisterAccount
   ) {
-    createUserWithEmailAndPassword(this.auth, email, pwd)
-      .then((user) => {
-        // dispatch(new SignedInSucc(user.user));
-      })
-      .catch((err) => {
-        this.sbs.open(err);
-      });
+    const { signedUpAnon } = getState();
+    if (!signedUpAnon) {
+      createUserWithEmailAndPassword(this.auth, email, pwd)
+        .then((user) => {
+          // dispatch(new SignedInSucc(user.user));
+        })
+        .catch((err) => {
+          this.sbs.open(err);
+        });
+    } else {
+      // link accounts
+      const cred = EmailAuthProvider.credential(email, pwd);
+      linkWithCredential(this.auth.currentUser!, cred)
+        .then((usercred) => {
+          const user = usercred.user;
+          console.log('Anonymous account successfully upgraded', user);
+          this.sbs.open('Migrated Account to Email/Password login');
+          dispatch(new Navigate(['']));
+          patchState({
+            signedUpAnon: false,
+          });
+        })
+        .catch((error) => {
+          console.error('Error upgrading anonymous account', error);
+        });
+    }
   }
 
   @Action(SignInAnon)

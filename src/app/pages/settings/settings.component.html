@@ -1,16 +1,30 @@
 <app-toolbar [mode]="1">Settings</app-toolbar>
 
 <div class="main-wrapper">
-  <button class="block" mat-flat-button color="warn" (click)="signOut()">
+  <button
+    *ngIf="signedIn$ | async"
+    class="block"
+    mat-flat-button
+    color="warn"
+    (click)="signOut()"
+  >
     Sign Out
   </button>
 
-  <ng-container *ngIf="">
-    <a routerLink="/login" mat-flat-button color="primary" class="block"
-      >Sign In</a
-    >
-    <a routerLink="/register" mat-flat-button color="primary" class="block"
-      >Sign Up</a
-    >
-  </ng-container>
+  <a
+    *ngIf="!(signedIn$ | async)"
+    routerLink="/login"
+    mat-flat-button
+    color="primary"
+    class="block"
+    >Sign In</a
+  >
+  <a
+    *ngIf="signedInEmail$ | async"
+    routerLink="/register"
+    mat-flat-button
+    color="primary"
+    class="block"
+    >Sign Up</a
+  >
 </div>
