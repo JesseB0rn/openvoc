@@ -1,7 +1,7 @@
-<app-toolbar [mode]="1">Sign In</app-toolbar>
+<app-toolbar [mode]="1">Sign Up</app-toolbar>
 
 <div class="main-wrapper">
-  <form [formGroup]="loginGroup">
+  <form [formGroup]="registerGroup">
     <mat-form-field appearance="outline" class="block">
       <mat-label>Email</mat-label>
       <input matInput formControlName="email" />
@@ -15,16 +15,13 @@
       class="block"
       mat-flat-button
       color="primary"
-      [disabled]="loginGroup.invalid"
-      (click)="login()"
+      [disabled]="registerGroup.invalid"
+      (click)="register()"
     >
-      Sign In
-    </button>
-    <a routerLink="/register" mat-flat-button color="primary" class="block">
       Sign Up
-    </a>
-    <button (click)="anon()" mat-flat-button color="primary" class="block">
-      Log in anonymously
     </button>
+    <a routerLink="/login" mat-flat-button color="primary" class="block">
+      Sign In
+    </a>
   </form>
 </div>

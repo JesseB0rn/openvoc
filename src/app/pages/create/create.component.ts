@@ -7,7 +7,7 @@ import {
   createDeck as addDeck,
   saveLocalDeck,
 } from 'src/app/actions/deckActions';
-import { Deck } from 'src/app/classes/deck';
+import { Deck, Worldlist } from 'src/app/classes/deck';
 import { DeckInProgress } from 'src/app/models/deckInProgress.model';
 import { CSVToArray } from 'src/app/utilities/csv-parser';
 import { validCSVValidator } from 'src/app/validators/validCSV';
@@ -54,10 +54,16 @@ export class CreateComponent implements OnInit {
   }
 
   createDeck() {
-    let deck = new Deck(
-      this.createGroup.value['deck'],
-      CSVToArray(this.createGroup.value['csv'], '\t')
-    );
+    let cardsAsDict: Worldlist = {};
+    CSVToArray(this.createGroup.value['csv'], '\t').forEach((card, index) => {
+      console.log(card);
+      cardsAsDict[index] = {
+        def: card[0] || null,
+        answ: card[1] || null,
+      };
+    });
+
+    let deck = new Deck(this.createGroup.value['deck'], cardsAsDict);
     this.store.dispatch(new addDeck(deck, `${this.user$.getValue()}`));
   }
 }

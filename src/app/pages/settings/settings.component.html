@@ -4,4 +4,13 @@
   <button class="block" mat-flat-button color="warn" (click)="signOut()">
     Sign Out
   </button>
+
+  <ng-container *ngIf="">
+    <a routerLink="/login" mat-flat-button color="primary" class="block"
+      >Sign In</a
+    >
+    <a routerLink="/register" mat-flat-button color="primary" class="block"
+      >Sign Up</a
+    >
+  </ng-container>
 </div>

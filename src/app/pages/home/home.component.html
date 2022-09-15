@@ -1,1 +1,25 @@
 <app-toolbar> Overview </app-toolbar>
+<div class="main-wrapper">
+  <mat-grid-list [cols]="cols" [rowHeight]="ratio">
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-title>Create new Deck</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+        <mat-card-actions align="end">
+          <a routerLink="/create" mat-button>New Deck</a>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile *ngFor="let deck of decks$ | async">
+      <mat-card>
+        <mat-card-title>{{ deck.name }}</mat-card-title>
+        <mat-card-subtitle>{{ deck.length }} Cards</mat-card-subtitle>
+        <mat-card-actions align="end">
+          <button mat-button>Edit</button>
+          <button mat-button>Learn</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -30,6 +30,7 @@ import {
 import { LandingModule } from './pages/landing/landing.module';
 import { LearnModule } from './pages/learn/learn.module';
 import { LoginModule } from './pages/login/login.module';
+import { RegisterModule } from './pages/register/register.module';
 
 const importedComponents: any[] = [ToolbarModule, FooterModule];
 const pages: any[] = [
@@ -39,6 +40,7 @@ const pages: any[] = [
   LandingModule,
   LearnModule,
   LoginModule,
+  RegisterModule,
 ];
 @NgModule({
   declarations: [AppComponent],
