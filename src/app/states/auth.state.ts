@@ -99,6 +99,7 @@ export class AuthState {
     patchState({
       auth: true,
       user: user.user.uid,
+      signedUpAnon: user.user.isAnonymous,
     });
     dispatch(new Navigate(['']));
     dispatch(new syncDecks(user.user.uid));
